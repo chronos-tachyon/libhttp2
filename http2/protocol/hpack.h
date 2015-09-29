@@ -22,7 +22,7 @@ namespace hpack {
 
 using Header = http2::headers::Header;
 
-// static_table returns the HTTP/2 static table, as specified by RFC 7540
+// static_table returns the HTTP/2 static table, as specified by RFC 7541
 // Appendix A.
 const std::vector<Header>& static_table();
 
@@ -35,7 +35,7 @@ class Table final {
   // empty returns true iff the dynamic table contains no entries.
   bool empty() const { return dynamic_.empty(); }
 
-  // size returns the bytes used, as specified by RFC 7540 section 4.1.
+  // size returns the bytes used, as specified by RFC 7541 section 4.1.
   std::size_t size() const { return size_; }
 
   // max_size returns the current maximum size of the dynamic table.

@@ -19,7 +19,7 @@ struct Header final {
   Header(std::string n, std::string v)
       : name(std::move(n)), value(std::move(v)) {}
 
-  // size computes the bytes used, as specified by RFC 7540 section 4.1.
+  // size computes the bytes used, as specified by RFC 7541 section 4.1.
   std::size_t size() const { return 32 + name.size() + value.size(); }
 };
 
