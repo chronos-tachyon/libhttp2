@@ -1,2 +1,4 @@
 # libhttp2
-An HTTP/2.0 server you can link into your binary.
+An HTTP/2 server you can link into your binary.
+
+Current state: a jumble of pieces.  You can look at them if you like.
