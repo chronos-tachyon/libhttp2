@@ -14,11 +14,13 @@
 #include <utility>
 #include <vector>
 
-#include "http2/protocol/headers.h"
+#include "http2/headers/headers.h"
 
 namespace http2 {
 namespace protocol {
 namespace hpack {
+
+using Header = http2::headers::Header;
 
 // static_table returns the HTTP/2 static table, as specified by RFC 7540
 // Appendix A.

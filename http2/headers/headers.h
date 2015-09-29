@@ -1,77 +1,69 @@
-// String constants for frequently occurring HTTP/2 headers.
-// To prevent typos, use these instead of typing the strings by hand.
+#ifndef HTTP2_PROTOCOL_HEADER_H
+#define HTTP2_PROTOCOL_HEADER_H
 
-#ifndef HTTP2_HEADERS_HEADERS_H
-#define HTTP2_HEADERS_HEADERS_H
+#include <cstddef>
+#include <ostream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace http2 {
 namespace headers {
 
-extern const char* const kMethod;
-extern const char* const kScheme;
-extern const char* const kAuthority;
-extern const char* const kPath;
-extern const char* const kStatus;
+// Header holds a single HTTP/2 header.
+struct Header final {
+  std::string name;
+  std::string value;
 
-extern const char* const kAcceptCharset;
-extern const char* const kAcceptEncoding;
-extern const char* const kAcceptLanguage;
-extern const char* const kAcceptRanges;
-extern const char* const kAccept;
-extern const char* const kAccessControlAllowOrigin;
-extern const char* const kAge;
-extern const char* const kAllow;
-extern const char* const kAuthorization;
-extern const char* const kCacheControl;
-extern const char* const kContentDisposition;
-extern const char* const kContentEncoding;
-extern const char* const kContentLanguage;
-extern const char* const kContentLength;
-extern const char* const kContentLocation;
-extern const char* const kContentRange;
-extern const char* const kContentType;
-extern const char* const kCookie;
-extern const char* const kDate;
-extern const char* const kETag;
-extern const char* const kExpect;
-extern const char* const kExpires;
-extern const char* const kFrom;
-extern const char* const kHost;
-extern const char* const kIfMatch;
-extern const char* const kIfModifiedSince;
-extern const char* const kIfNoneMatch;
-extern const char* const kIfRange;
-extern const char* const kIfUnmodifiedSince;
-extern const char* const kLastModified;
-extern const char* const kLink;
-extern const char* const kLocation;
-extern const char* const kMaxForwards;
-extern const char* const kProxyAuthenticate;
-extern const char* const kProxyAuthorization;
-extern const char* const kRange;
-extern const char* const kReferer;
-extern const char* const kRefresh;
-extern const char* const kRetryAfter;
-extern const char* const kServer;
-extern const char* const kSetCookie;
-extern const char* const kStrictTransportSecurity;
-extern const char* const kTransferEncoding;
-extern const char* const kUserAgent;
-extern const char* const kVary;
-extern const char* const kVia;
-extern const char* const kWwwAuthenticate;
+  Header() = default;
+  Header(std::string n, std::string v)
+      : name(std::move(n)), value(std::move(v)) {}
 
-extern const char* const kMethodHEAD;
-extern const char* const kMethodGET;
-extern const char* const kMethodPOST;
-extern const char* const kMethodPUT;
-extern const char* const kMethodDELETE;
-extern const char* const kMethodOPTIONS;
+  // size computes the bytes used, as specified by RFC 7540 section 4.1.
+  std::size_t size() const { return 32 + name.size() + value.size(); }
+};
 
-extern const char* const kSchemeHTTP;
-extern const char* const kSchemeHTTPS;
+inline std::ostream& operator<<(std::ostream& s, const Header& t) {
+  return (s << "{" << t.name << ": " << t.value << "}");
+}
+inline bool operator==(const Header& a, const Header& b) {
+  return a.name == b.name && a.value == b.value;
+}
+inline bool operator<(const Header& a, const Header& b) {
+  return a.name < b.name || (a.name == b.name && a.value < b.value);
+}
+inline bool operator!=(const Header& a, const Header& b) { return !(a == b); }
+inline bool operator>(const Header& a, const Header& b) { return (b < a); }
+inline bool operator>=(const Header& a, const Header& b) { return !(a < b); }
+inline bool operator<=(const Header& a, const Header& b) { return !(b < a); }
+
+class Headers final {
+ public:
+  Headers() = default;
+
+  const std::vector<Header>& all() const { return headers_; }
+
+  std::vector<std::string> every(std::string name) const;
+  std::pair<bool, std::string> first(std::string name) const;
+  std::pair<bool, std::string> last(std::string name) const;
+
+  void add(Header h) { headers_.push_back(std::move(h)); }
+  void add(std::string name, std::string value) {
+    headers_.emplace_back(std::move(name), std::string(value));
+  }
+
+  void replace(Header h);
+  void replace(std::string name, std::string value) {
+    replace(Header{std::move(name), std::move(value)});
+  }
+
+  void remove(std::string name);
+
+ private:
+  std::vector<Header> headers_;
+};
 
 }  // namespace headers
 }  // namespace http2
 
-#endif  // HTTP2_HEADERS_HEADERS_H
+#endif  // HTTP2_PROTOCOL_HEADER_H

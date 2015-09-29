@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "http2/headers/headers.h"
+#include "http2/headers/constants.h"
 
 namespace http2 {
 namespace protocol {

@@ -1,9 +1,9 @@
-#include "http2/protocol/headers.h"
+#include "http2/headers/headers.h"
 
 #include "gtest/gtest.h"
 
-using http2::protocol::Header;
-using http2::protocol::Headers;
+using http2::headers::Header;
+using http2::headers::Headers;
 
 TEST(Header, EQ) {
   Header a = {"foo", "bar"};
