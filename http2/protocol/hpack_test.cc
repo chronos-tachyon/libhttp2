@@ -130,7 +130,7 @@ TEST(Huffman, Decode) {
 TEST(Header, Decode) {
   http2::protocol::hpack::Decoder d;
   std::vector<uint8_t> input;
-  std::vector<http2::protocol::hpack::Header> output, expected;
+  std::vector<http2::protocol::Header> output, expected;
 
   // C.2.1.  Literal Header Field with Indexing
   input = {0x40, 0x0a, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x2d,
@@ -315,7 +315,7 @@ TEST(Huffman, Encode) {
 TEST(Header, RoundTrip) {
   http2::protocol::hpack::Encoder e;
   http2::protocol::hpack::Decoder d;
-  std::vector<http2::protocol::hpack::Header> input, back;
+  std::vector<http2::protocol::Header> input, back;
   std::vector<uint8_t> forward;
 
   input = {{"custom-key", "custom-header"}};

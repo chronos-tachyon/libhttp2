@@ -18,6 +18,13 @@ cc_library(
 )
 
 cc_library(
+  name = "header",
+  srcs = ["header.cc"],
+  hdrs = ["header.h"],
+  visibility = ["//visibility:public"],
+)
+
+cc_library(
   name = "hpack",
   srcs = [
     "hpack-decode.cc",
@@ -26,7 +33,10 @@ cc_library(
     "hpack-table.cc",
   ],
   hdrs = ["hpack.h"],
-  deps = ["//http2/headers"],
+  deps = [
+    ":header",
+    "//http2/headers",
+  ],
   visibility = ["//visibility:public"],
 )
 
