@@ -14,7 +14,7 @@
 #include <utility>
 #include <vector>
 
-#include "http2/protocol/header.h"
+#include "http2/protocol/headers.h"
 
 namespace http2 {
 namespace protocol {

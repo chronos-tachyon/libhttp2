@@ -18,9 +18,9 @@ cc_library(
 )
 
 cc_library(
-  name = "header",
-  srcs = ["header.cc"],
-  hdrs = ["header.h"],
+  name = "headers",
+  srcs = ["headers.cc"],
+  hdrs = ["headers.h"],
   visibility = ["//visibility:public"],
 )
 
@@ -34,7 +34,7 @@ cc_library(
   ],
   hdrs = ["hpack.h"],
   deps = [
-    ":header",
+    ":headers",
     "//http2/headers",
   ],
   visibility = ["//visibility:public"],
@@ -44,6 +44,16 @@ cc_library(
   name = "settings",
   srcs = ["settings.cc"],
   hdrs = ["settings.h"],
+)
+
+cc_test(
+  name = "headers_test",
+  srcs = ["headers_test.cc"],
+  deps = [
+    ":headers",
+    "//third_party:gtest",
+  ],
+  size = "small",
 )
 
 cc_test(
