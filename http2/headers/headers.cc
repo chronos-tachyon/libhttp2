@@ -33,6 +33,10 @@ std::pair<bool, std::string> Headers::last(std::string name) const {
   return result;
 }
 
+void Headers::add(Header h) {
+  headers_.push_back(std::move(h));
+}
+
 void Headers::replace(Header h) {
   bool found = false;
   auto it = headers_.begin();
@@ -43,7 +47,7 @@ void Headers::replace(Header h) {
         continue;
       }
       found = true;
-      it->value = std::move(h.value);
+      *it = std::move(h);
     }
     ++it;
   }
@@ -61,6 +65,14 @@ void Headers::remove(std::string name) {
       ++it;
     }
   }
+}
+
+std::size_t Headers::size() const {
+  std::size_t sum = 0;
+  for (const auto& h : headers_) {
+    sum += h.size();
+  }
+  return sum;
 }
 
 }  // namespace headers

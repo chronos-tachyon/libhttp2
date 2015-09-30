@@ -39,15 +39,13 @@ inline bool operator<=(const Header& a, const Header& b) { return !(b < a); }
 
 class Headers final {
  public:
-  Headers() = default;
-
   const std::vector<Header>& all() const { return headers_; }
 
   std::vector<std::string> every(std::string name) const;
   std::pair<bool, std::string> first(std::string name) const;
   std::pair<bool, std::string> last(std::string name) const;
 
-  void add(Header h) { headers_.push_back(std::move(h)); }
+  void add(Header h);
   void add(std::string name, std::string value) {
     headers_.emplace_back(std::move(name), std::string(value));
   }
@@ -58,6 +56,9 @@ class Headers final {
   }
 
   void remove(std::string name);
+
+  // size computes the bytes used, as specified by RFC 7541 section 4.1.
+  std::size_t size() const;
 
  private:
   std::vector<Header> headers_;

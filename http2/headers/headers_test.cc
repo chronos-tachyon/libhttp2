@@ -29,6 +29,13 @@ TEST(Header, LT) {
   EXPECT_GE(b, a);
 }
 
+TEST(Header, Size) {
+  Header h = {"abcd", "efgh"};
+  EXPECT_EQ(h.size(), 40);
+  h.value = "e";
+  EXPECT_EQ(h.size(), 37);
+}
+
 static Headers dummy_request() {
   Headers headers;
   headers.add(":method", "GET");
@@ -122,4 +129,15 @@ TEST(Headers, Remove) {
   names = header_names(headers);
   EXPECT_EQ(names.size(), 5);
   EXPECT_EQ(names.at(4), "cookie");
+}
+
+TEST(Headers, Size) {
+  Headers headers;
+  EXPECT_EQ(headers.size(), 0);
+  headers.add("abcd", "efgh");
+  EXPECT_EQ(headers.size(), 40);
+  headers.add("ijkl", "mnop");
+  EXPECT_EQ(headers.size(), 80);
+  headers.replace("abcd", "e");
+  EXPECT_EQ(headers.size(), 77);
 }
