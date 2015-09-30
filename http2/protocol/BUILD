@@ -18,31 +18,8 @@ cc_library(
 )
 
 cc_library(
-  name = "hpack",
-  srcs = [
-    "hpack-decode.cc",
-    "hpack-encode.cc",
-    "hpack-huffman.cc",
-    "hpack-table.cc",
-  ],
-  hdrs = ["hpack.h"],
-  deps = ["//http2/headers"],
-  visibility = ["//visibility:public"],
-)
-
-cc_library(
   name = "settings",
   srcs = ["settings.cc"],
   hdrs = ["settings.h"],
   deps = [":error"],
-)
-
-cc_test(
-  name = "hpack_test",
-  srcs = ["hpack_test.cc"],
-  deps = [
-    ":hpack",
-    "//third_party:gtest",
-  ],
-  size = "small",
 )

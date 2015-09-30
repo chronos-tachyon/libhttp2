@@ -1,4 +1,4 @@
-#include "http2/protocol/hpack.h"
+#include "http2/protocol/hpack/hpack.h"
 
 #include <cassert>
 #include <cstdint>

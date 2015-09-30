@@ -1,7 +1,7 @@
 // Tools for dealing with HTTP/2 headers.
 
-#ifndef HTTP2_PROTOCOL_HPACK_H
-#define HTTP2_PROTOCOL_HPACK_H
+#ifndef HTTP2_PROTOCOL_HPACK_HPACK_H
+#define HTTP2_PROTOCOL_HPACK_HPACK_H
 
 #include <cstdint>
 #include <cstdlib>
@@ -196,4 +196,4 @@ class Encoder final {
 }  // namespace protocol
 }  // namespace http2
 
-#endif  // HTTP2_PROTOCOL_HPACK_H
+#endif  // HTTP2_PROTOCOL_HPACK_HPACK_H
