@@ -34,6 +34,7 @@ cc_library(
   name = "settings",
   srcs = ["settings.cc"],
   hdrs = ["settings.h"],
+  deps = [":error"],
 )
 
 cc_test(
